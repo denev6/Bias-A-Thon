@@ -3,6 +3,11 @@
 - [Bias-A-Thon : Bias 대응 챌린지 <Track 2>](https://dacon.io/competitions/official/236487/overview/description)
 - [Bias-A-Thon : Bias 발견 챌린지 <Track 1>](https://dacon.io/competitions/official/236486/overview/description)
 
+## 데이터 및 모델
+
+- [Google Drive](https://drive.google.com/drive/folders/18vzXbeDobmMidoomdQO16w3Wg_n8vyB9?usp=sharing)
+- 학교 구글 계정(@g.skku.edu)로 접속하면 볼 수 있습니다.
+
 ## 용어
 
 - LLM: [Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
@@ -20,6 +25,7 @@
 - LLM의 bias를 줄이는 RAG 시스템 구현
 - Fine-tuning은 사용하면 안 됨
 - 강화학습 기법을 적용해야 함 → **Agent를 어떻게 정의할 것인가?**
+- 프롬프트는 한국어로 작성
 
 예시
 
