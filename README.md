@@ -1,12 +1,14 @@
 # LLM Bias Detection with Reinforcement Learning
 
-- [Bias-A-Thon : Bias 대응 챌린지 <Track 2>](https://dacon.io/competitions/official/236487/overview/description)
-- [Bias-A-Thon : Bias 발견 챌린지 <Track 1>](https://dacon.io/competitions/official/236486/overview/description)
+- 🤖 [Bias-A-Thon : Bias 대응 챌린지 <Track 2>](https://dacon.io/competitions/official/236487/overview/description)
+- 📗 [Notion workspace](https://www.notion.so/1ea94c27e48280db9584f4ebf7f83aa7?pvs=4)
 
 ## 데이터 및 모델
 
-- [Google Drive](https://drive.google.com/drive/folders/18vzXbeDobmMidoomdQO16w3Wg_n8vyB9?usp=sharing)
+- 📦 [Google Drive](https://drive.google.com/drive/folders/18vzXbeDobmMidoomdQO16w3Wg_n8vyB9?usp=sharing)
 - 학교 구글 계정(@g.skku.edu)로 접속하면 볼 수 있습니다.
+- Model 로드 방법은 [classification.ipynb](classification.ipynb)를 참고해 주세요.
+  - [baseline](baseline.ipynb)보다 [classification](classification.ipynb) 방식의 추론 속도가 더 빠르고 정확합니다.
 
 ## 용어
 
@@ -20,13 +22,8 @@
 - Python 3.11.12
 - Ubuntu 22.04.4 LTS (Google Colab)
 
-## 문제 정의
+## 제안하는 기법
 
-- LLM의 bias를 줄이는 RAG 시스템 구현
-- Fine-tuning은 사용하면 안 됨
-- 강화학습 기법을 적용해야 함 → **Agent를 어떻게 정의할 것인가?**
-- 프롬프트는 한국어로 작성
-
-예시
-
-![예시 다이어그램](/assets/example.png)
+- Prompt chaining
+- Masked prompt for few shot learning
+- Re-ranker with reinforcement learning
