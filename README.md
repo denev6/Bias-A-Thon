@@ -18,5 +18,5 @@
 ## 제안하는 기법
 
 - Masking + Prompt chaining: [prompt_chain](prompt_chain/optim_chain.ipynb)
-- RAG + few-shot learning: [ppo_prompt_generation](reinforcement/ppo_prompt_generation.ipynb)
-- Initial prompt generation with reinforcement learning
+- Initial prompt generation with reinforcement learning: [ppo_prompt_generation](reinforcement/ppo_prompt_generation.ipynb)
+- RAG + few-shot learning
