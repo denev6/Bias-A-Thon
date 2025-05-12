@@ -16,20 +16,21 @@ from collections import Counter
 
 # Argument Parsing
 parser = argparse.ArgumentParser()
-parser.add_argument('--save_dir', type=str, default='./baseline')
-parser.add_argument('--model_dir', type=str, default='./Meta-Llama-3.1-8B-Instruct')
-parser.add_argument('--batch_size', type=int, default=8)
-parser.add_argument('--checkpoint_interval', type=int, default=100)
-parser.add_argument('--num_workers', type=int, default=4)
-parser.add_argument('--use_compile', action='store_true')
-parser.add_argument('--input_data', type=str, default='./test.csv')
+parser.add_argument("--save_dir", type=str, default="./baseline")
+parser.add_argument("--model_dir", type=str, default="./Meta-Llama-3.1-8B-Instruct")
+parser.add_argument("--batch_size", type=int, default=8)
+parser.add_argument("--checkpoint_interval", type=int, default=100)
+parser.add_argument("--num_workers", type=int, default=4)
+parser.add_argument("--use_compile", action="store_true")
+parser.add_argument("--input_data", type=str, default="./test.csv")
 args = parser.parse_args()
 
 os.makedirs(args.save_dir, exist_ok=True)
 
 # Data Load
 print("Loading dataset...")
-data = pd.read_csv(args.input_data, encoding='utf-8-sig')
+data = pd.read_csv(args.input_data, encoding="utf-8-sig")
+
 
 # Prompt Function
 def generate_first_prompt(row):
@@ -50,22 +51,27 @@ def generate_first_prompt(row):
         "<|start_header_id|>assistant<|end_header_id|>"
     )
 
+
 # Preprocess Prompts
 print("Preprocessing prompts...")
 with ThreadPoolExecutor(max_workers=args.num_workers) as executor:
-    prompt_futures = {executor.submit(generate_first_prompt, row): i for i, row in data.iterrows()}
-    
+    prompt_futures = {
+        executor.submit(generate_first_prompt, row): i for i, row in data.iterrows()
+    }
+
     prompts = [None] * len(data)
-    for future in tqdm(as_completed(prompt_futures), total=len(data), desc="Creating prompts"):
+    for future in tqdm(
+        as_completed(prompt_futures), total=len(data), desc="Creating prompts"
+    ):
         idx = prompt_futures[future]
         prompts[idx] = future.result()
 
-data['prompt'] = prompts
+data["prompt"] = prompts
 
 # Model Load
 print("Loading model and tokenizer...")
 model_kwargs = {
-    "device_map": "auto",       # 자동 분산
+    "device_map": "auto",  # 자동 분산
     "trust_remote_code": True,
     "local_files_only": True,
     "torch_dtype": torch.float16,
@@ -81,17 +87,16 @@ if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
 
 model = AutoModelForCausalLM.from_pretrained(
-    args.model_dir,
-    low_cpu_mem_usage=True,    # GPU 메모리 절약 로딩
-    **model_kwargs
+    args.model_dir, low_cpu_mem_usage=True, **model_kwargs  # GPU 메모리 절약 로딩
 )
 
-if args.use_compile and hasattr(torch, 'compile'):
+if args.use_compile and hasattr(torch, "compile"):
     try:
         print("Compiling model...")
         model = torch.compile(model)
     except Exception as e:
         print(f"Model compile failed: {e}")
+
 
 # Utilities
 def extract_last_choice(raw_answer, choices):
@@ -102,15 +107,13 @@ def extract_last_choice(raw_answer, choices):
             return choices[idx - 1]
     return raw_answer.strip()
 
+
 @torch.no_grad()
 def batch_tokenize(prompts):
     return tokenizer(
-        prompts,
-        padding=True,
-        return_tensors="pt",
-        truncation=True,
-        max_length=512
+        prompts, padding=True, return_tensors="pt", truncation=True, max_length=512
     ).to(model.device)
+
 
 @torch.no_grad()
 def process_batch(prompts):
@@ -118,7 +121,7 @@ def process_batch(prompts):
     outputs = model.generate(
         **inputs,
         max_new_tokens=16,
-        do_sample=False,     # safe decoding
+        do_sample=False,  # safe decoding
         num_beams=1,
         early_stopping=True,
         eos_token_id=tokenizer.eos_token_id,
@@ -126,6 +129,7 @@ def process_batch(prompts):
         use_cache=True,
     )
     return tokenizer.batch_decode(outputs, skip_special_tokens=True)
+
 
 # Inference
 def predict_with_dynamic_batching(df, num_votes=5):
@@ -139,7 +143,7 @@ def predict_with_dynamic_batching(df, num_votes=5):
         while start_idx < total:
             end_idx = min(start_idx + current_batch_size, total)
             batch = df.iloc[start_idx:end_idx]
-            batch_prompts = batch['prompt'].tolist()
+            batch_prompts = batch["prompt"].tolist()
 
             try:
                 start_time = time.time()
@@ -155,7 +159,7 @@ def predict_with_dynamic_batching(df, num_votes=5):
 
                 for i in range(len(batch_prompts)):
                     row = batch.iloc[i]
-                    choices = ast.literal_eval(row['choices'])
+                    choices = ast.literal_eval(row["choices"])
 
                     # 각 샘플에 대해 Voting
                     candidate_answers = [
@@ -167,15 +171,21 @@ def predict_with_dynamic_batching(df, num_votes=5):
                     vote_counter = Counter(candidate_answers)
                     final_answer = vote_counter.most_common(1)[0][0]
 
-                    all_results.append({
-                        "ID": row["ID"],
-                        "raw_input": batch_prompts[i],
-                        "vote_candidates": candidate_answers,
-                        "final_answer": final_answer,
-                    })
+                    all_results.append(
+                        {
+                            "ID": row["ID"],
+                            "raw_input": batch_prompts[i],
+                            "vote_candidates": candidate_answers,
+                            "final_answer": final_answer,
+                        }
+                    )
 
                 pbar.update(len(batch_prompts))
-                pbar.set_postfix(batch_size=current_batch_size, tps=f"{time_per_sample:.2f}s", votes=num_votes)
+                pbar.set_postfix(
+                    batch_size=current_batch_size,
+                    tps=f"{time_per_sample:.2f}s",
+                    votes=num_votes,
+                )
 
                 if time_per_sample < 0.5 and current_batch_size < max_batch_size:
                     current_batch_size = min(current_batch_size + 2, 32)
@@ -208,9 +218,12 @@ def predict_with_dynamic_batching(df, num_votes=5):
 
     return pd.DataFrame(all_results)
 
+
 # Start
 torch.backends.cudnn.benchmark = True
-if hasattr(torch.backends.cuda, 'matmul') and hasattr(torch.backends.cuda.matmul, 'allow_tf32'):
+if hasattr(torch.backends.cuda, "matmul") and hasattr(
+    torch.backends.cuda.matmul, "allow_tf32"
+):
     torch.backends.cuda.matmul.allow_tf32 = True
 
 torch.manual_seed(42)
@@ -222,13 +235,20 @@ start_time = time.time()
 
 try:
     result_df = predict_with_dynamic_batching(data, num_votes=5)
-    result_df.to_csv(os.path.join(args.save_dir, "submission_optim_chain2.csv"), index=False, encoding="utf-8-sig")
+    result_df.to_csv(
+        os.path.join(args.save_dir, "submission_optim_chain2.csv"),
+        index=False,
+        encoding="utf-8-sig",
+    )
     total_time = time.time() - start_time
-    print(f"Inference done! Time: {total_time:.2f}s, Speed: {len(data)/total_time:.2f} samples/s")
+    print(
+        f"Inference done! Time: {total_time:.2f}s, Speed: {len(data)/total_time:.2f} samples/s"
+    )
 
 except Exception as e:
     print(f"Inference failed: {e}")
     import traceback
+
     traceback.print_exc()
 
 # Cleanup
