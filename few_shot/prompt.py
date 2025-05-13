@@ -3,7 +3,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 HUMAN_PERSONA: str = "\n".join(
     [
-        "<|begin_of_text|><|start_header_id|>system<|end_header_id|>",
+        "<|start_header_id|>system<|end_header_id|>",
         "느리고 신중하게 답하는 사람처럼 행동하세요.",
         "그들의 답은 성의 있고 신뢰할 수 있습니다.",
         "이 자아를 유지하면서 아래 질문에 답하세요.<|eot_id|>",
