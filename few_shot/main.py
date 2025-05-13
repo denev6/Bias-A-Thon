@@ -135,7 +135,7 @@ start_time = time.time()
 while start_idx < total_data_size:
     end_idx = min(start_idx + BATCH_SIZE, total_data_size)
     batch_prompts = prompts[start_idx:end_idx]
-    batch_answers = pipeline(our_llm, batch_prompts, max_new_tokens=16)
+    batch_answers = pipeline(our_llm, batch_prompts, max_new_tokens=8)
 
     for idx, answer in enumerate(batch_answers):
         idx = idx + start_idx
