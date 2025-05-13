@@ -1,0 +1,31 @@
+import pandas as pd
+
+from google.colab import drive
+
+drive.mount('/content/drive')
+
+your_answer = pd.read_csv('/content/drive/MyDrive/Colab Notebooks/checkpoint/submission_checkpoint_100.csv', encoding='utf-8')
+true_answer = pd.read_csv('/content/drive/MyDrive/Colab Notebooks/checkpoint/Test_Data_Answer_100.csv', encoding='utf-8')
+
+# 필요한 열만 추출
+your_answer = your_answer[['ID', 'answer']]
+true_answer = true_answer[['ID', 'answer']]
+
+# ID 기준으로 머지
+merged = pd.merge(true_answer, your_answer, on='ID', suffixes=('_true', '_your'))
+
+# 정답이 비어있는 경우 제외
+merged = merged.dropna(subset=['answer_true'])
+
+# 맞춘 것만 체크
+merged['correct'] = merged['answer_true'] == merged['answer_your']
+
+# 결과 출력
+total = len(merged)
+correct = merged['correct'].sum()
+accuracy = correct / total * 100
+
+print(f"총 비교한 데이터 개수: {total}개")
+print(f"맞춘 개수: {correct}개")
+print(f"정확도: {accuracy:.2f}%")
+
