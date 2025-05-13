@@ -18,5 +18,6 @@
 ## 제안하는 기법
 
 - Masking + Prompt chaining: [prompt_chain](prompt_chain/optim_chain.ipynb)
+- Human persona + few-shot
 - Initial prompt generation with reinforcement learning: [ppo_prompt_generation](reinforcement/ppo_prompt_generation.ipynb)
 - RAG + few-shot learning
