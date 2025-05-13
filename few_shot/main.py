@@ -26,7 +26,7 @@ device = set_cuda()
 # Llama3
 print("🔥모델 불러오는 중...")
 our_llm = Model(
-    MODEL_DIR,
+    join_path(MODEL_DIR),
     device=device,
     max_length=TOKENIZER_MAX_LENGTH,
     max_new_tokens=MAX_NEW_TOKENS,
@@ -40,8 +40,8 @@ our_llm = Model(
 # 사용할 데이터 및 체크포인트
 print("🔥데이터 준비 중...")
 df_original, df_check_point, start_idx = load_data(
-    path=INPUT_DATA,
-    checkpoint_dir=CHECKPOINT_DIR,
+    path=join_path(INPUT_DATA),
+    checkpoint_dir=join_path(CHECKPOINT_DIR),
     last_checkpoint=LAST_CHECK_POINT,
 )
 total_data_size = len(df_check_point)
