@@ -1,6 +1,6 @@
 # Few-shot learning
 
-```python
+```sh
 python main.py
 ```
 

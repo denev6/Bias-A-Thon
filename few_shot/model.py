@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 
 def set_cuda(random_seed):
-    assert torch.cuda.is_available(), "CUDA를 사용하고 있지 않습니다!"
+    assert torch.cuda.is_available(), "CUDA를 사용할 수 없습니다!"
     device = "cuda"
 
     # CUDA 디버깅
@@ -37,7 +37,6 @@ class Model:
         path,
         device,
         max_length,
-        max_new_tokens,
         do_sample,
         temperature=0.6,
         top_k=0.9,
@@ -61,7 +60,6 @@ class Model:
             torch_dtype=torch.float16,
         )
         self.max_length = max_length
-        self.max_new_tokens = max_new_tokens
         self.do_sample = do_sample
         self.temperature = temperature
         self.top_k = top_k
@@ -79,11 +77,11 @@ class Model:
         ).to(self.device)
 
     @torch.no_grad()
-    def process_batch(self, batch_tokens):
+    def process_batch(self, batch_tokens, max_new_tokens):
         answer_tokens = self.model.generate(
             input_ids=batch_tokens["input_ids"],
             attention_mask=batch_tokens["attention_mask"],
-            max_new_tokens=self.max_new_tokens,
+            max_new_tokens=max_new_tokens,
             do_sample=self.do_sample,
             temperature=self.temperature,
             top_k=self.top_k,
