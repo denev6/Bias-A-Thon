@@ -1,4 +1,4 @@
-"""5-shot learning with Human-persona and Self-masking"""
+"""5-shot learning with reasoning"""
 
 import ast
 import time
@@ -26,7 +26,7 @@ if IGNORE_WARNING:
     ignore_warnings()
 
 # CUDA 설정
-device = set_cuda()
+device = set_cuda(RANDOM_SEED)
 
 # Llama3
 print("🔥모델 불러오는 중...")
@@ -70,7 +70,7 @@ start_time = time.time()
 while start_idx < total_data_size:
     end_idx = min(start_idx + BATCH_SIZE, total_data_size)
     batch_prompts = prompts[start_idx:end_idx]
-    batch_answers = pipeline(our_llm, batch_prompts, max_new_tokens=8)
+    batch_answers = pipeline(our_llm, batch_prompts, max_new_tokens=MAX_NEW_TOKENS)
 
     for idx, answer in enumerate(batch_answers):
         idx = idx + start_idx
