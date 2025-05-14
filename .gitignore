@@ -1,4 +1,8 @@
 .vscode
 .idea
+.ipynb
 __pycache__
+
+# Private
+.env
 /test*

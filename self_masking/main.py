@@ -1,4 +1,4 @@
-"""5-shot learning with Human-persona and Self-masking"""
+"""5-shot learning with Self-masking"""
 
 import ast
 import time
@@ -27,7 +27,7 @@ if IGNORE_WARNING:
     ignore_warnings()
 
 # CUDA 설정
-device = set_cuda()
+device = set_cuda(RANDOM_SEED)
 
 # Llama3
 print("🔥모델 불러오는 중...")
@@ -43,9 +43,7 @@ our_llm = Model(
 )
 
 
-###########################################################
-
-
+### Self-Masking ###
 file_prefix = "masking"
 
 # 원본 데이터 및 체크포인트
@@ -106,9 +104,7 @@ save_data(
 print("\n😝마스킹이 완료되었습니다.")
 
 
-###########################################################
-
-
+### Inference ###
 file_prefix = "submit"
 
 df_original, df_check_point, start_idx = load_data(
