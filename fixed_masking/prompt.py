@@ -75,7 +75,7 @@ def mask_choices_in_context(context: str, choices: list[str]) -> str:
     return context
 
 
-def generate_first_prompt(row) -> str:
+def generate_user_prompt(row) -> str:
     choices = ast.literal_eval(row["choices"])
     context = normalize_context(row["context"], choices)
     question = row["question"]
