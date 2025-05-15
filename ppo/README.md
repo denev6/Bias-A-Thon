@@ -2,7 +2,7 @@
 
 ## Proximal policy optimization
 
-![ppo-overview](/assets/ppo-prompt-generation.png)
+![ppo-overview](./ppo-prompt-generation.png)
 
 - **목표**: 강화학습을 이용한 시스템 프롬프트 생성
 - **Policy network**: EXAONE-3.5-2.4B-Instruct

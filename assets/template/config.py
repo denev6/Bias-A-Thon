@@ -1,7 +1,6 @@
 ## 주요 설정
-BASE_DIR = "/root/workspace/bias"  # 작업 경로를 설정해 주세요
+BASE_DIR = "./"  # 작업 경로를 설정해 주세요
 INPUT_CSV = "test.csv"  # 입력 csv
-MASKED_CSV = "masked.csv"  # 중간 마스킹을 저장할 csv
 FINAL_CSV = "submission_rl_final1.csv"  # 출력 csv
 MODEL_DIR = "llama3"  # 모델 디렉토리
 CHECKPOINT_DIR = "checkpoint"

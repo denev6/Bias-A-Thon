@@ -22,7 +22,7 @@ def pipeline(model, batch_prompts, max_new_tokens) -> list[str]:
 
 
 def compute_reward_length_based(
-    output: str, min_len: int = 1550, max_len: int = 1650
+    output: str, min_len: int = 60, max_len: int = 110
 ) -> int:
     """답변 길이에 따라 보상 계산"""
     length = len(output)
@@ -89,9 +89,10 @@ while start_idx < total_data_size:
     for idx, answer in enumerate(batch_answers):
         idx = idx + start_idx
 
-        reward = compute_reward_length_based(answer)
-
+        # 모델의 최종 응답에서 전체 답변 텍스트 추출
         prompt, raw_answer = split_answer(answer)
+        # 길이에 따른 보상 계산
+        reward = compute_reward_length_based(raw_answer)
         choices = ast.literal_eval(df_original.at[idx, "choices"])
         extracted_answer = extract_last_choice(raw_answer, choices)
 
