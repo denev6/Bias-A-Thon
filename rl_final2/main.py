@@ -1,4 +1,4 @@
-"""5-shot learning with reasoning"""
+"""Reasoning 5-shot learning with temperature adjustment v2"""
 
 import ast
 import time
@@ -20,22 +20,15 @@ def pipeline(model, batch_prompts, max_new_tokens) -> list[str]:
     answer_tokens = model.process_batch(question_tokens, max_new_tokens)
     return answer_tokens
 
-def compute_reward_length_based(output: str, min_len: int = 60, max_len: int = 110) -> int:
+
+def compute_reward_length_based(
+    output: str, min_len: int = 60, max_len: int = 110
+) -> int:
     """답변 길이에 따라 보상 계산"""
     length = len(output)
     if length < min_len or length > max_len:
         return -1  # 너무 짧거나 너무 길면 패널티
     return 1  # 적당하면 보상
-
-import re
-
-def extract_full_answer_text(answer: str) -> str:
-    """모델의 최종 응답에서 전체 답변 텍스트 추출"""
-    pattern = re.compile(r"<\|start_header_id\|>assistant<\|end_header_id\|>(.*?)<\|eot_id\|>", re.DOTALL)
-    match = pattern.search(answer)
-    if match:
-        return match.group(1)
-    return ""
 
 
 print("🔥설정 준비 중...")
@@ -97,11 +90,9 @@ while start_idx < total_data_size:
         idx = idx + start_idx
 
         # 모델의 최종 응답에서 전체 답변 텍스트 추출
-        full_answer_text = extract_full_answer_text(answer)
-        # 길이에 따른 보상 계산
-        reward = compute_reward_length_based(full_answer_text)
-
         prompt, raw_answer = split_answer(answer)
+        # 길이에 따른 보상 계산
+        reward = compute_reward_length_based(raw_answer)
         choices = ast.literal_eval(df_original.at[idx, "choices"])
         extracted_answer = extract_last_choice(raw_answer, choices)
 

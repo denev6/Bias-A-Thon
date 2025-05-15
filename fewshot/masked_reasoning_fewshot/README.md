@@ -1,4 +1,4 @@
-# Reasoning Few-shot learning
+# Deprecated: Reasoning Few-shot learning with masked examples
 
 ```sh
 python main.py

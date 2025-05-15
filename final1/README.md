@@ -1,4 +1,6 @@
-# Reasoning Few-shot learning
+# Final 1: Reasoning Few-shot learning
+
+Reasoning few-shot with manual masking (eg. 남성/여성 <> 남자/여자)
 
 ```sh
 python main.py

@@ -1,4 +1,4 @@
-"""5-shot learning with reasoning"""
+"""Reasoning 5-shot learning with temperature adjustment"""
 
 import ast
 import time
@@ -20,12 +20,16 @@ def pipeline(model, batch_prompts, max_new_tokens) -> list[str]:
     answer_tokens = model.process_batch(question_tokens, max_new_tokens)
     return answer_tokens
 
-def compute_reward_length_based(output: str, min_len: int = 1550, max_len: int = 1650) -> int:
+
+def compute_reward_length_based(
+    output: str, min_len: int = 1550, max_len: int = 1650
+) -> int:
     """답변 길이에 따라 보상 계산"""
     length = len(output)
     if length < min_len or length > max_len:
         return -1  # 너무 짧거나 너무 길면 패널티
     return 1  # 적당하면 보상
+
 
 print("🔥설정 준비 중...")
 if IGNORE_WARNING:

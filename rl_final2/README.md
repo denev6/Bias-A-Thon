@@ -1,4 +1,4 @@
-# Reasoning Few-shot learning
+# Reasoning Few-shot with temperature adjustment v2
 
 ```sh
 python main.py
