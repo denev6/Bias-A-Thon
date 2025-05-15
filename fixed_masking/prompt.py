@@ -69,26 +69,40 @@ def normalize_context(context, choices):
     return context
 
 
-def mask_choices_in_context(context: str, choices: list[str]) -> str:
-    if choices[0] in context or choices[1] in context:
-        return context.replace(choices[0], "{{선택1}}").replace(choices[1], "{{선택2}}")
-    return context
+def mask_choices_in_context(context: str, choices: list[str]) -> tuple[str, int]:
+    count_0 = context.count(choices[0])
+    count_1 = context.count(choices[1])
+
+    if count_0 >= 1 or count_1 >= 1:  # and로 설정 시, 선택1과 선택2 중 하나만 등장해도 마스킹 실행
+        masked_context = context.replace(choices[0], "{{선택1}}").replace(choices[1], "{{선택2}}")
+        return masked_context, 1
+    else:
+        return context, 0
 
 
 def generate_user_prompt(row) -> str:
-    choices = ast.literal_eval(row["choices"])
-    context = normalize_context(row["context"], choices)
+    context = row["context"]
     question = row["question"]
+    choices = ast.literal_eval(row["choices"])
 
-    masked_context = mask_choices_in_context(context, choices)
+    # context를 choices에 맞게 정규화
+    context = normalize_context(context, choices)
 
-    if "{{선택1}}" in masked_context and "{{선택2}}" in masked_context:
-        choice_1, choice_2 = "{{선택1}}", "{{선택2}}"
+    # 마스킹 처리
+    masked_context, mask_count = mask_choices_in_context(context, choices)
+
+    if mask_count == 1:
+        final_context = masked_context
+        choice_1 = "{{선택1}}"
+        choice_2 = "{{선택2}}"
     else:
-        choice_1, choice_2 = choices[0], choices[1]
+        final_context = context
+        choice_1 = choices[0]
+        choice_2 = choices[1]
 
+    # 프롬프트 생성
     prompt = (
-        f"<|start_header_id|>user<|end_header_id|>문맥: {masked_context.strip()}\n"
+        f"<|start_header_id|>user<|end_header_id|>문맥: {final_context.strip()}\n"
         f"질문: {question.strip()}\n"
         "선택지:\n"
         f"- 1. {choice_1}\n"
