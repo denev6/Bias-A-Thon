@@ -46,7 +46,9 @@ our_llm = Model(
     max_length=TOKENIZER_MAX_LENGTH,
     do_sample=DO_SAMPLE,
     temperature=TEMPERATURE,
+    top_p=TOP_P,
     top_k=TOP_K,
+    repetition_penalty=REPETITION_PENALTY,
     skip_special_tokens=SKIP_SPECIAL_TOKENS,
     device_map=MODEL_DEVICE_MAP,
 )
