@@ -39,7 +39,9 @@ class Model:
         max_length,
         do_sample,
         temperature=0.6,
-        top_k=0.9,
+        top_k=30,
+        top_p=0.9,
+        repetition_penalty=1.0,
         skip_special_tokens=True,
         device_map="auto",
     ):
@@ -63,6 +65,8 @@ class Model:
         self.do_sample = do_sample
         self.temperature = temperature
         self.top_k = top_k
+        self.top_p = top_p
+        self.repetition_penalty = repetition_penalty
         self.skip_special_tokens = skip_special_tokens
         self.device = device
 
@@ -85,6 +89,8 @@ class Model:
             do_sample=self.do_sample,
             temperature=self.temperature,
             top_k=self.top_k,
+            top_p=self.top_p,
+            repetition_penalty=self.repetition_penalty,
             eos_token_id=self.tokenizer.eos_token_id,
             pad_token_id=self.tokenizer.pad_token_id,
             use_cache=True,
