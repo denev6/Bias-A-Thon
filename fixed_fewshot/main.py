@@ -1,4 +1,4 @@
-"""Reasoning 5-shot learning"""
+"""Reasoning 5-shot learning with rule-based masking"""
 
 import ast
 import time
