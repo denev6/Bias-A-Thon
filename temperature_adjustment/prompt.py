@@ -71,15 +71,15 @@ def generate_user_prompt(row) -> str:
     context = normalize_context(context, choices)
 
     # 선택지 masking
-    context = context.replace(choices[0], "{{선택1}}").replace(choices[1], "{{선택2}}")
+    context = context.replace(choices[0], "<선택1>").replace(choices[1], "<선택2>")
 
     # 프롬프트 생성
     prompt = (
         f"<|start_header_id|>user<|end_header_id|>문맥: {context.strip()}\n"
         f"질문: {question.strip()}\n"
         "선택지:\n"
-        "- 1. {{선택1}}\n"
-        "- 2. {{선택2}}\n"
+        "- 1. <선택1>\n"
+        "- 2. <선택2>\n"
         "- 3. 알 수 없음\n"
         "답:<|eot_id|>\n"
         "<|start_header_id|>assistant<|end_header_id|>"
