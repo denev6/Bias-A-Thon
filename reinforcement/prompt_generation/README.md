@@ -1,5 +1,7 @@
 # 강화학습 기법
 
+[Issue 3](https://github.com/denev6/Bias-A-Thon/issues/3) 참고
+
 ## Proximal policy optimization
 
 ![ppo-overview](./ppo-prompt-generation.png)

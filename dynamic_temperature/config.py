@@ -1,0 +1,25 @@
+## 주요 설정
+BASE_DIR = "/root/workspace/bias"
+INPUT_CSV = "test.csv"
+MASKED_CSV = "masked.csv"
+FINAL_CSV = "submission_rl_final1.csv"
+MODEL_DIR = "llama3"
+CHECKPOINT_DIR = "checkpoint"
+MODEL_DEVICE_MAP = "auto"
+LAST_INFERENCE_CHECK_POINT = 0
+BATCH_SIZE = 32
+
+## 세부 설정
+DEFAULT_CHOICE = "알 수 없음"
+NUM_WORKERS = 2
+IGNORE_WARNING = True
+SKIP_SPECIAL_TOKENS = True
+DO_SAMPLE = True
+TEMPERATURE = 0.2
+TOP_P = 0.90
+TOP_K = 30
+REPETITION_PENALTY = 1.0
+MAX_NEW_TOKENS = 64
+TOKENIZER_MAX_LENGTH = 2048
+CHECK_POINT_STEP = 500
+RANDOM_SEED = 42

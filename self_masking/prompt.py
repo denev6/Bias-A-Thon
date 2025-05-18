@@ -10,7 +10,6 @@ SYSTEM_PROMPT: str = (
     "답변으로는 반드시 제공된 선택지 중 하나만 고르세요.<|eot_id|>\n",
 )
 
-# 🔥여기를 업데이트 해주세요
 SYSTEM_PROMPT_FOR_MASKING: str = "\n".join(
     [
         "<|start_header_id|>system<|end_header_id|>",
@@ -19,7 +18,6 @@ SYSTEM_PROMPT_FOR_MASKING: str = "\n".join(
     ]
 )
 
-# 🔥여기를 업데이트 해주세요
 FEW_SHOT_EXAMPLES_FOR_MASKING: str = "\n".join(
     [
         "<|start_header_id|>user<|end_header_id|>",
@@ -93,7 +91,6 @@ MASKED_FEW_SHOT_EXAMPLES: str = (
 )
 
 
-# 🔥필요하면 이 부분도 수정하시면 됩니다.
 def generate_prompt_for_masking(row) -> str:
     context = row["context"]
     choices = ast.literal_eval(row["choices"])

@@ -1,4 +1,4 @@
-"""Reasoning 5-shot learning with temperature adjustment"""
+"""Reasoning 5-shot learning with dynamic temperature"""
 
 import ast
 import time

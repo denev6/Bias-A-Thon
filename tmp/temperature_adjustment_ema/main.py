@@ -110,7 +110,7 @@ while start_idx < total_data_size:
 
         # EMA 기반 온도 조절
         ema_reward = ema_alpha * reward + (1 - ema_alpha) * ema_reward
-        current_temperature *= (1 + scale_factor * ema_reward)
+        current_temperature *= 1 + scale_factor * ema_reward
         current_temperature = clip_temperature(current_temperature)
         our_llm.temperature = current_temperature
 

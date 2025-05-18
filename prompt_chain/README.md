@@ -1,4 +1,4 @@
-# Prompt chaining
+# Prompt chaining (Self-debias)
 
 1. 답변 생성
 2. 답변 스스로 검증
