@@ -2,7 +2,7 @@
 
 ⚠️ `data/Test_Data_Answer_{100, 200}.csv`도 대회 측 데이터이기 때문에 Repo 공개 전 삭제할 예정입니다. (reinforcement 내 데이터도 삭제)
 
-이 저장소는 [Bias-A-Thon 2025: Track 2](https://dacon.io/competitions/official/236487/overview/description) 대회에서 **최종 0위를 기록한 솔루션**입니다.
+이 저장소는 [Bias-A-Thon 2025: Track 2](https://dacon.io/competitions/official/236487/overview/description) 대회에서 **최종 3위를 기록한 솔루션**입니다.
 
 ## 📌 대회 소개
 
@@ -13,7 +13,7 @@
 
 ## 🥉 아이디어
 
-저희 팀은 다음과 같은 아이디어를 통해 최종 0위를 달성했습니다:
+저희 팀은 다음과 같은 아이디어를 통해 최종 3위를 달성했습니다:
 
 - **Reasoning Few-shot**: Few-shot learning 설정에서 예시마다 답변의 이유를 포함시켜, 모델이 논리적 근거를 기반으로 판단할 수 있도록 유도했습니다.
 - **Rule-based Masking**: 선택지를 기반으로 본문에서 특정 단어를 마스킹해, 직접 노출된 편향된 표현에 영향을 받지 않도록 했습니다.

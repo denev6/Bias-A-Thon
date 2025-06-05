@@ -10,19 +10,17 @@
 ## 학습 결과
 
 ```text
-Evaluating model for 2 episodes...
-
 Episode 1:
-  Episode reward: 107.000
-  Average temperature: 0.001
+  Episode reward: 105.000
+  Average temperature: 0.000
 
 Episode 2:
-  Episode reward: 105.000
-  Average temperature: 0.001
+  Episode reward: 107.000
+  Average temperature: 0.000
 
 ==============================
 EVALUATION RESULTS
 ==============================
 Average episode reward: 106.000 ± 1.000
-Average temperature: 0.001 ± 0.000
+Average temperature: 0.000 ± 0.000
 ```
