@@ -4,7 +4,7 @@
 - Rule-based Masking: 선택지를 바탕으로 문제를 마스킹합니다.
 - Single-turn: 한 턴에 바로 답변을 생성합니다.
 - Classification: {1, 2, 3} 선택지를 이용해 답변을 선택하도록 합니다.
-- No Sampling: `do_sample=False` 옵션을 사용합니다.
+- Deterministic Output: `do_sample=False` 옵션을 사용합니다.
 
 ## Run
 
@@ -20,7 +20,7 @@ $ python main.py         # 모델 추론 및 결과 저장
 ## Environment
 
 ```text
-Operating System: Linux 5.15.0-46-generic (#49~20.04.1-Ubuntu SMP Thu Aug 4 19:15:44 UTC 2022)
+Operating System: Linux 5.15.0-46-generic
 Python Version: 3.11.0
 CUDA Version (PyTorch): 12.6
 Package Versions:

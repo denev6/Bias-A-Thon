@@ -1,7 +1,5 @@
 # Bias-A-Thon 2025: Track 2
 
-⚠️ `data/Test_Data_Answer_{100, 200}.csv`도 대회 측 데이터이기 때문에 Repo 공개 전 삭제할 예정입니다. (reinforcement 내 데이터도 삭제)
-
 이 저장소는 [Bias-A-Thon 2025: Track 2](https://dacon.io/competitions/official/236487/overview/description) 대회에서 **최종 3위를 기록한 솔루션**입니다.
 
 ## 📌 대회 소개
@@ -28,12 +26,6 @@
 |[final_submission](final_submission)|0.9227|
 |[dynamic_temperature](dynamic_temperature)|0.9149|
 |[reasoning_fewshot](reasoning_fewshot)|0.9116|
-
-## 관련 링크
-
-- 🤖 [Bias-A-Thon : Bias 대응 챌린지 <Track 2>](https://dacon.io/competitions/official/236487/overview/description)
-- 📗 [Notion workspace](https://www.notion.so/1ea94c27e48280db9584f4ebf7f83aa7?pvs=4)
-- 📦 [Google Drive](https://drive.google.com/drive/folders/18vzXbeDobmMidoomdQO16w3Wg_n8vyB9?usp=sharing): 학교 구글 계정(@g.skku.edu)으로 접속하면 볼 수 있습니다.
 
 ## 참고 자료
 
